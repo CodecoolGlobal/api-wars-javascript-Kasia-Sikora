@@ -1,7 +1,12 @@
 <div id="menu">
     <a href="/" class="btn">Planet list</a>
     <a href="//">Voting statistic</a>
-    <a href="{{ url_for("user_registration")}}">Registration</a>
-    <a href="//">Login</a>
-    <a href="//">Logout</a>
+    {% if not username %}
+        <a href="{{ url_for("user_registration")}}">Registration</a>
+        <a href="{{ url_for("login")}}">Login</a>
+    {% endif %}
+    {%  if username %}
+        Login: {{ session['username'] }}
+        <a href="{{ url_for("logout")}}">Logout</a>
+    {% endif %}
 </div>

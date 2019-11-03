@@ -35,6 +35,7 @@ export const data_handler = {
                     col.innerText = "No known residents"
                 } else {
                     createResidentsButton(col, table_headers, i);
+                    modalHandling(data);
                 }
             } else {
                 col.innerText = table_headers[i]
@@ -73,3 +74,28 @@ function createVoteButton(col){
     button.innerText = "Vote";
     col.appendChild(button);
 }
+
+// not working good
+function modalHandling(data){
+    let modal_title = document.getElementsByClassName('modal-title');
+    let modal_body = document.getElementsByClassName('modal-body');
+    modal_title[0].innerText = "Residents of " + data.name;
+    // createModalTable(data, modal_body[0])
+
+}
+//
+// function createModalTable(data, modal_body) {
+//     let modal_table = document.createElement('modal_table');
+//     modal_table.setAttribute('class', 'table table-bordered');
+//     let row = document.createElement('tr');
+//     let modal_table_headers = ['Name', 'Height', 'Mass', 'Hair color', 'Skin color', 'Eye color', 'Birth year', 'Gender'];
+//
+//     for (let header of modal_table_headers){
+//         let column = document.createElement('th');
+//         column.innerText = header;
+//         row.appendChild(column);
+//     }
+//     modal_table.appendChild(row);
+//     modal_body.appendChild(modal_table)
+// }
+
