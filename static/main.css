@@ -14,10 +14,10 @@ body {
     font-size: 50px;
 }
 
-#nextButton,
-#previousButton{
-    background-color: #006699;
-}
+/*#nextButton,*/
+/*#previousButton{*/
+/*    background-color: #006699;*/
+/*}*/
 
 #menu{
     background-color: #f2f2f2;
