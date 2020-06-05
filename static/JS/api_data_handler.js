@@ -1,24 +1,35 @@
 import { fetchData } from "./api_connection.js";
+import { modalHandling } from "./modal.js";
 
 export const data_handler = {
 
     table: document.getElementById('main_table'),
     prev: '',
     next: '',
+    nextNext: '',
+    prevPrev: '',
     callbackfn: () => {},
 
     pageUp: () => {
-        console.log('wchodzi');
         data_handler.table.innerHTML = '';
         fetchData(data_handler.next, data_handler.callbackfn);
+        fetchData(data_handler.nextNext, data_handler.callbackfn);
 },
 
     pageDown: () => {
-        console.log("wchodzi prev");
         data_handler.table.innerHTML = '';
         fetchData(data_handler.prev, data_handler.callbackfn);
 },
     createColumn(data, table) {
+
+        let userLogin = '';
+        const login = document.getElementsByTagName('a');
+        for (let log of login){
+            if (log.innerText == 'Login'){
+                userLogin = log;
+            }
+        }
+        // console.log(userLogin);
 
         const row = document.createElement('tr');
         table.appendChild(row);
@@ -34,14 +45,18 @@ export const data_handler = {
                 if (data.residents.length === 0) {
                     col.innerText = "No known residents"
                 } else {
-                    createResidentsButton(col, table_headers, i);
-                    modalHandling(data);
+                    createResidentsButton(col, table_headers, i, data.residents, data.name);
                 }
             } else {
                 col.innerText = table_headers[i]
             }
             if (table_headers[i] === "") {
-                createVoteButton(col);
+                if (userLogin == '') {
+                    createVoteButton(col);
+                }
+                else{
+                    col.innerText = "Login to vote"
+                }
             }
             if (table_headers[i] === data.population) {
                 col.innerText = table_headers[i] + " people"
@@ -50,21 +65,26 @@ export const data_handler = {
                 col.innerText = table_headers[i] + " km"
             }
             if (table_headers[i] === data.surface_water) {
-                col.innerText = table_headers[i] + "%"
+                col.innerText = table_headers[i] + " %"
             }
         }
 
     },
 };
 
-function createResidentsButton (col, table_headers, i){
+function createResidentsButton (col, table_headers, i, residents, name){
     const button = document.createElement('button');
-    button.dataset.type = "button";
+    button.dataset.type = "residents-button";
+    button.dataset.residents = residents;
+    button.dataset.name = name;
     button.dataset.target = '#exampleModalCenter';
     button.dataset.toggle = 'modal';
     button.setAttribute("class", 'button');
     button.innerText = table_headers[i].length + ' resident(s)';
     col.appendChild(button);
+    button.addEventListener("click", ()=> {
+       modalHandling(name)
+    })
 }
 
 function createVoteButton(col){
@@ -74,28 +94,4 @@ function createVoteButton(col){
     button.innerText = "Vote";
     col.appendChild(button);
 }
-
-// not working good
-function modalHandling(data){
-    let modal_title = document.getElementsByClassName('modal-title');
-    let modal_body = document.getElementsByClassName('modal-body');
-    modal_title[0].innerText = "Residents of " + data.name;
-    // createModalTable(data, modal_body[0])
-
-}
-//
-// function createModalTable(data, modal_body) {
-//     let modal_table = document.createElement('modal_table');
-//     modal_table.setAttribute('class', 'table table-bordered');
-//     let row = document.createElement('tr');
-//     let modal_table_headers = ['Name', 'Height', 'Mass', 'Hair color', 'Skin color', 'Eye color', 'Birth year', 'Gender'];
-//
-//     for (let header of modal_table_headers){
-//         let column = document.createElement('th');
-//         column.innerText = header;
-//         row.appendChild(column);
-//     }
-//     modal_table.appendChild(row);
-//     modal_body.appendChild(modal_table)
-// }
 

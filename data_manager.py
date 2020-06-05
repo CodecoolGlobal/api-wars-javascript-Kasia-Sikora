@@ -26,3 +26,11 @@ def check_if_user_exist_in_database(cursor, username):
         return False
     else:
         return user_data[0]
+
+
+@connection.connection_handler
+def get_users(cursor):
+    cursor.execute(
+        '''SELECT username FROM users'''
+    )
+    return cursor.fetchall()

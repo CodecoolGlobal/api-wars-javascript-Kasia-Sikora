@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, json
 
 import data_manager
 import util
@@ -57,6 +57,21 @@ def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
     return redirect(url_for('index'))
+
+
+@app.route('/users')
+def users():
+    users = data_manager.get_users()
+    print(users)
+    return json.dumps(users[0])
+
+
+@app.route('/post-method', methods=['POST'])
+def post():
+    data = request.get_json()
+    print(dir(request))
+    print(data)
+    return '{}'
 
 
 if __name__ == '__main__':

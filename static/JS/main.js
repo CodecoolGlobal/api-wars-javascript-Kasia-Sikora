@@ -1,20 +1,31 @@
-import { data_handler } from "./api_data_handler.js";
-import { fetchData } from "./api_connection.js";
+import {data_handler} from "./api_data_handler.js";
+import {fetchData} from "./api_connection.js";
 
-const page = 'https://swapi.co/api/planets';
+const page = 'https://swapi.dev/api/planets';
+
 
 fetchData(page, main_function);
 
 
-function createNextButton() {
+function createNextButton(nextPage) {
     const nextButton = document.getElementById('nextButton');
-    nextButton.addEventListener('click', data_handler.pageUp);
+    if (nextPage == null) {
+        nextButton.setAttribute('disabled', 'disabled');
+    } else {
+        nextButton.removeAttribute('disabled');
+        nextButton.addEventListener('click', data_handler.pageUp);
+    }
 }
 
 
-function createPrevButton() {
+function createPrevButton(previousPage) {
     const previousButton = document.getElementById('previousButton');
-    previousButton.addEventListener('click', data_handler.pageDown);
+    if (previousPage == null) {
+        previousButton.setAttribute('disabled', 'disabled');
+    } else {
+        previousButton.removeAttribute('disabled');
+        previousButton.addEventListener('click', data_handler.pageDown);
+    }
 }
 
 
@@ -32,9 +43,8 @@ function createTableWithHeaders() {
 }
 
 
-function createRowsAndColumns(datas) {
-    let data_array = datas.results;
-    console.log(data_array);
+function createRowsAndColumns(data) {
+    let data_array = data.results;
     const table = document.getElementById('main_table');
 
     data_array.forEach((data) => {
@@ -44,12 +54,11 @@ function createRowsAndColumns(datas) {
 
 
 function main_function(data) {
-    console.log(data);
     data_handler.next = data.next;
     data_handler.prev = data.previous;
     data_handler.callbackfn = main_function;
-    createNextButton();
-    createPrevButton();
+    createNextButton(data.next);
+    createPrevButton(data.previous);
     createTableWithHeaders();
     createRowsAndColumns(data);
 }
