@@ -1,8 +1,7 @@
-# API Wars skeleton repository
+# API Wars
 
-This is a starting repository for the API Wars assignment in the Web Python module.
+Api Wars is web application which shows data about the Star Wars universe, store visitor preferences with cookies and handle user login with sessions.
 
-You can check out the assignment in the curriculum:  
-https://learn.code.cool/web-python/#/../assignments/web/api-wars
+It's a page built to practice creating simple web applications using HTML, CSS, JavaScript and Python(Flask).
 
-This "skeleton" is intentionally empty. :)
+![alt text](https://github.com/Kasia-Sikora/api-wars-javascript-Kasia-Sikora/blob/master/international_space_station_view_space_day_time_clouds_earth_northern_europe_ocean-1030912.jpg!d.jpeg?raw=true)
